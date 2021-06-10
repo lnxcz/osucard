@@ -125,7 +125,9 @@ router.get('/:user', async function(req, res) {
   
   res.writeHead(200, {
     'Content-Type': 'image/png',
-    'Content-Length': returnedB64.length
+    'Content-Length': returnedB64.length,
+    "Cache-Control": "public, max-age=345600",
+    "Expires": new Date(Date.now() + 345600000).toUTCString()
   });
   res.end(returnedB64);
   } catch(err) {

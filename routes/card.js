@@ -1,9 +1,16 @@
 var express = require('express');
 const osu = require("node-osu");
-const { createCanvas, loadImage, registerFont } = require('canvas');
+const {
+  createCanvas,
+  loadImage,
+  registerFont
+} = require('canvas');
 var router = express.Router()
+const imageCache = new Map();
 
-registerFont('./fonts/toru.otf', { family: 'Torus' })
+registerFont('./fonts/toru.otf', {
+  family: 'Torus'
+})
 
 const osuApi = new osu.Api(process.env.OSU_APIKEY, {
   // baseUrl: sets the base api url (default: https://osu.ppy.sh/api)
@@ -25,26 +32,19 @@ function secondsToDhms(seconds) {
   return dDisplay + hDisplay + mDisplay;
 }
 
-router.get('/:user', async function(req, res) {
-  try {
-  const color = req.query["color"]
+async function generateCanvas(user, color) {
   const canvas = createCanvas(1137, 523);
   const ctx = canvas.getContext('2d');
 
-  let userQuery = req.params.user;
-
-  let user = await osuApi.getUser({ u: userQuery });
-  console.log(user);
-
   let image = "";
-  switch(color) {
+  switch (color) {
     case "orange":
-       image = await loadImage('./images/base.png');
-    break;
+      image = await loadImage('./images/base.png');
+      break;
 
     default:
-       image = await loadImage('./images/baseblue.png');
-    break;
+      image = await loadImage('./images/baseblue.png');
+      break;
   }
 
   ctx.drawImage(image, 0, 0, 1137, 523);
@@ -120,18 +120,52 @@ router.get('/:user', async function(req, res) {
   ctx.clip();
   ctx.drawImage(pfp, 60, 60, 250, 250);
 
-  let buffer = canvas.toBuffer().toString("base64");
-  let returnedB64 = Buffer.from(buffer, 'base64');
-  
-  res.writeHead(200, {
-    'Content-Type': 'image/png',
-    'Content-Length': returnedB64.length,
-    "Cache-Control": "public, max-age=345600",
-    "Expires": new Date(Date.now() + 345600000).toUTCString()
-  });
-  res.end(returnedB64);
-  } catch(err) {
-    return res.redirect("/");
+  return canvas.toBuffer().toString("base64");
+}
+
+router.get('/:user', async function (req, res) {
+  try {
+    const color = req.query["color"];
+    let userQuery = req.params.user;
+
+    let user = await osuApi.getUser({
+      u: userQuery
+    });
+
+    if (user.length != undefined) return res.redirect('/');
+
+    let canvas;
+    if (imageCache.get(req.params.user)) {
+      canvas = imageCache.get(req.params.user);
+      let returnedB64 = Buffer.from(canvas, 'base64');
+
+      res.writeHead(200, {
+        'Content-Type': 'image/png',
+        'Content-Length': returnedB64.length,
+        "Cache-Control": "public, max-age=345600",
+        "Expires": new Date(Date.now() + 345600000).toUTCString()
+      });
+      res.end(returnedB64);
+    } else {
+      canvas = await generateCanvas(user, color);
+      let returnedB64 = Buffer.from(canvas, 'base64');
+
+      imageCache.set(req.params.user, canvas);
+
+      res.writeHead(200, {
+        'Content-Type': 'image/png',
+        'Content-Length': returnedB64.length,
+        "Cache-Control": "public, max-age=345600",
+        "Expires": new Date(Date.now() + 345600000).toUTCString()
+      });
+      res.end(returnedB64);
+
+      setTimeout(() => {
+        imageCache.delete(req.params.user);
+      }, 3600000);
+    }
+  } catch (err) {
+    console.log(err);
   }
 })
 

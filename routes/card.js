@@ -5,7 +5,7 @@ var router = express.Router()
 
 registerFont('./fonts/toru.otf', { family: 'Torus' })
 
-const osuApi = new osu.Api('90efe2b42a35d38022559a9c3bd4e723192cfd9e', {
+const osuApi = new osu.Api(process.env.OSU_APIKEY, {
   // baseUrl: sets the base api url (default: https://osu.ppy.sh/api)
   notFoundAsError: false, // Throw an error on not found instead of returning nothing. (default: true)
   completeScores: false, // When fetching scores also fetch the beatmap they are for (Allows getting accuracy) (default: false)

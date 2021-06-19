@@ -124,7 +124,6 @@ async function generateCanvas(user, color) {
 }
 
 router.get('/:user', async function (req, res) {
-  try {
     const color = req.query["color"];
     let userQuery = req.params.user;
 
@@ -133,40 +132,16 @@ router.get('/:user', async function (req, res) {
     });
 
     if (user.length != undefined) return res.redirect('/');
+    let canvas = await generateCanvas(user, color);
+    let returnedB64 = Buffer.from(canvas, 'base64');
 
-    let canvas;
-    if (imageCache.get(req.params.user)) {
-      canvas = imageCache.get(req.params.user);
-      let returnedB64 = Buffer.from(canvas, 'base64');
-
-      res.writeHead(200, {
-        'Content-Type': 'image/png',
-        'Content-Length': returnedB64.length,
-        "Cache-Control": "public, max-age=345600",
-        "Expires": new Date(Date.now() + 345600000).toUTCString()
-      });
+    res.writeHead(200, {
+      'Content-Type': 'image/png',
+      'Content-Length': returnedB64.length,
+      "Cache-Control": "public, max-age=345600",
+      "Expires": new Date(Date.now() + 345600000).toUTCString()
+    });
       res.end(returnedB64);
-    } else {
-      canvas = await generateCanvas(user, color);
-      let returnedB64 = Buffer.from(canvas, 'base64');
-
-      imageCache.set(req.params.user, canvas);
-
-      res.writeHead(200, {
-        'Content-Type': 'image/png',
-        'Content-Length': returnedB64.length,
-        "Cache-Control": "public, max-age=345600",
-        "Expires": new Date(Date.now() + 345600000).toUTCString()
-      });
-      res.end(returnedB64);
-
-      setTimeout(() => {
-        imageCache.delete(req.params.user);
-      }, 3600000);
-    }
-  } catch (err) {
-    console.log(err);
-  }
-})
+});
 
 module.exports = router

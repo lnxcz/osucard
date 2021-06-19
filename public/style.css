@@ -4,130 +4,157 @@
 }
 
 body {
-  background-image: url(https://i.postimg.cc/hGBDfrJP/image.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: #20262F;
+  text-align: center;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  margin: auto;
+  width: 100%;
+  font-family: Toru;
+  padding-bottom: 1%;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
 }
 
 #title {
   font-family: Toru;
+  color: #3385FF;
+  text-shadow: 0px 1px 11px #3385FF;
+  font-size: 100px;
+}
+
+#subtitle {
+  font-family: Toru;
   color: white;
-  font-size: 140px;
-  margin-bottom: 20px;
+  font-size: 35px;
+  margin-top: -70px;
 }
 
 header {
-  text-align: center;
+  margin-top: 10%;
 }
 
-#username {
-  background-color: #1f2224;
-  padding: 20px 30px;
-  border-radius: 15px;
-  outline: none;
-  width: 20%;
+.buttons-container .head-button {
+  background-color: #3385FF;
+  color: white;
   border: none;
-  color: rgb(141, 141, 141);
+  padding: 15px 30px;
   font-family: Toru;
-  font-size: 18px;
+  margin-left: 0.3%;
+  margin-right: 0.3%;
+  box-shadow: 0px 0px 15px 0px rgba(51,133,255,0.75);
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(51,133,255,0.75);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(51,133,255,0.75);
+  border-radius: 100px;
+  margin-top: -30px;
 }
 
-#create {
-  padding: 18px;
-  background-color: #292c2e;
-  font-family: Toru;
-  font-size: 22px;
-  color: rgb(148, 148, 148);
-  border: none;
-  border-radius: 20px;
-}
-
-#color {
-  padding: 12px;
-  background-color: #292c2e;
-  font-family: Toru;
-  font-size: 15px;
-  color: rgb(148, 148, 148);
-  border: none;
-  border-radius: 10px;
-  outline: none;
-}
-
-#create:hover {
-  background-color: #404346;
+.buttons-container .head-button:hover {
   cursor: pointer;
-  transition: all ease-in-out 0.6s;
 }
 
-@media only screen and (max-width: 1146px) {
-  #username {
-    width: 35%;
+.buttons-container .head-button:focus-within {
+  transition: all ease-in-out 0.3s;
+  animation: pop 0.3s;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
 
-@media only screen and (max-width: 666px) {
-  #username {
-    width: 45%;
-  }
-
-  #title {
-    font-size: 100px;
-  }
+.auth-card {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background-color: #20262F;
+  width: fit-content;
+  padding: 15px 30px;
+  border-radius: 10px;
 }
 
-@media only screen and (max-width: 516px) {
-  #title {
-    font-size: 60px;
-  }
+#logincard, #registercard {
+  display: none;
+}
 
-  #username {
-    font-size: 10px;
-  }
+#auth-title {
+  color: white;
+  font-family: Toru;
+}
+
+.auth-input {
+  background-color: #2c3441;
+  border: none;
+  outline: none;
+  padding: 10px;
+  margin-bottom: 5%;
+  color: white;
+  border-radius: 8px;
+  font-family: Toru;
+  color: #808ca0;
+}
+
+#auth-button {
+  background-color: #3385FF;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  font-size: 13px;
+  font-family: Toru;
+  margin-left: 0.3%;
+  margin-right: 0.3%;
+  box-shadow: 0px 0px 15px 0px rgba(51,133,255,0.75);
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(51,133,255,0.75);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(51,133,255,0.75);
+  border-radius: 100px;
+  margin-top: 2%;
+}
+
+#auth-button:hover {
+  cursor: pointer;
+}
+
+#auth-closebutton {
+  right: 5%;
+  background-color: transparent;
+  color: #4d5a70;
+  position: fixed;
+  border: none;
+  font-size: 20px;
+}
+
+#auth-closebutton:hover {
+  cursor: pointer;
 }
 
 .background {
   position: fixed;
+  top: 0;
+  background-color: black;
+  opacity: 0.9;
   width: 100%;
   height: 100%;
-  bottom: 0;
-  background-color: black;
-  opacity: 0.7;
-  display: none;
 }
 
-.popup {
-  position: fixed;
-  background-color: #1f2224;
-  width: fit-content;
-  height: fit-content;
-  padding: 15px;
-  border-radius: 16px;
-  text-align: center;
-  margin: -5% auto; 
-  left: 0;
-  right: 0; 
-  display: none;
-}
-
-.popup h1 {
-  color: rgb(190, 190, 190);
-  font-family: Toru;
-  text-align: center;
-}
-
-#card {
-  width: 418px;
-  height: 188px;
-}
-
-.link {
-  color: gray;
-  font-family: Toru;
-}
-
-#closeBtn {
-  color: rgb(177, 177, 177);
-  float: right;
-  cursor: pointer;
+body, html {
+  margin: 0;
+  padding: 0;
 }

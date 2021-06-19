@@ -4,36 +4,82 @@
   <link rel="stylesheet" href="./style.css" type="text/css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
  </head>
  
  <body>
    <header>
-      <br>
-      <h1 id="title">OSUCARD</h1>
-      
-      <div class="input-box">
-          <select name="color" id="color">
-            <option value="orange">orange</option>
-            <option value="blue">blue</option>
-          </select>
-          <input type="text" id="username" name="username" placeholder="Your osu! username">
-          <button id="create"><i class="fas fa-plus"></i></button>
-      </div>
+    <h1 id="title">OSUCARD</h1>
+    <p id="subtitle">Best Osu stats card generator</p>
+    <div class="buttons-container">
+      <button onclick="showCard('login')" class="head-button">
+        Login
+      </button>
+      <button onclick="showCard('register')" class="head-button">
+        Register
+      </button>
+    </div>
    </header>
 
-   <div id="background" class="background"></div>
-   
-   <div id="popup" class="popup">
-    <h3 id="closeBtn">&#10006;</h3>
-    <h1 class="popup-title">Here's your osu card!</h1>
-    <p id="link" class="link">https://apispammer.lnxcz1.repl.co/card/K3BA?color=blue</p>
-    <a id="nostyle" href="https://lnx.rip">
-    <img id="card" src="https://apispammer.lnxcz1.repl.co/card/K3BAA">
-    </a>
+   <footer>
+    <a href="https://github.com/K3BAA">Made with ❤️ by K3BA</a>
+   </footer>
+
+   <div id="logincard">
+    <div class="background"></div>
+    <div class="auth-card">
+      <button onclick="hideCard('login')" id="auth-closebutton">&#x2715</button>
+      <h1 id="auth-title">Login</h1>
+ 
+      <input class="auth-input" type="email" name="email" required placeholder="email" min="3" max="64"><br>
+      <input class="auth-input" type="password" name="password" required min="8" placeholder="password" max="255"><br>
+ 
+      <button id="auth-button">
+        Login
+      </button>
+    </div>
    </div>
 
-   <script src="./urlBuilder.js"></script>
+   <div id="registercard">
+    <div class="background"></div>
+    <div class="auth-card">
+      <button onclick="hideCard('register')" id="auth-closebutton">&#x2715</button>
+      <h1 id="auth-title">Register</h1>
+ 
+      <input class="auth-input" type="text" name="username" required placeholder="username" min="3" max="64">&nbsp;
+      <input class="auth-input" type="email" name="email" required placeholder="email" min="3" max="255"><br>
+      <input class="auth-input" type="password" name="password" required min="8" placeholder="password" max="255"><br>
+ 
+      <button id="auth-button">
+        Login
+      </button>
+    </div>
+   </div>
+
+   <script>
+    function showCard(card) {
+      switch(card) {
+        case "login":
+          document.getElementById("logincard").style = "display: block;";
+        break;
+
+        default: 
+          document.getElementById("registercard").style = "display: block;";
+        break;
+      }
+    }
+
+    function hideCard(card) {
+      switch(card) {
+        case "login":
+          document.getElementById("logincard").style = "display: none;";
+        break;
+
+        default: 
+          document.getElementById("registercard").style = "display: none;";
+        break;
+      }
+    }
+   </script>
  </body>
 </html>
 

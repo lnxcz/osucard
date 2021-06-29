@@ -52,7 +52,6 @@ header {
   -webkit-box-shadow: 0px 0px 15px 0px rgba(51,133,255,0.75);
   -moz-box-shadow: 0px 0px 15px 0px rgba(51,133,255,0.75);
   border-radius: 100px;
-  margin-top: -30px;
 }
 
 .buttons-container .head-button:hover {

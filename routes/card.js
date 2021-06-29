@@ -1,12 +1,25 @@
 var express = require('express');
 const osu = require("node-osu");
+const redis = require('redis');
 const {
   createCanvas,
   loadImage,
   registerFont
 } = require('canvas');
 var router = express.Router()
-const imageCache = new Map();
+
+// Create a new Redis client
+const defaultExpireTime = 60000;
+const cacheClient = redis.createClient();
+
+cacheClient.on("ready", () => {
+  console.log("Succefully connected to Redis client!");
+})
+
+cacheClient.on("error", (err) => {
+  console.log(err);
+})
+
 
 registerFont('./fonts/toru.otf', {
   family: 'Torus'
@@ -124,24 +137,40 @@ async function generateCanvas(user, color) {
 }
 
 router.get('/:user', async function (req, res) {
-    const color = req.query["color"];
-    let userQuery = req.params.user;
+  const color = req.query["color"];
+  let userQuery = req.params.user;
 
-    let user = await osuApi.getUser({
-      u: userQuery
-    });
+  let user = await osuApi.getUser({
+    u: userQuery
+  });
 
-    if (user.length != undefined) return res.redirect('/');
-    let canvas = await generateCanvas(user, color);
-    let returnedB64 = Buffer.from(canvas, 'base64');
+  if (user.length != undefined) return res.redirect('/');
 
-    res.writeHead(200, {
-      'Content-Type': 'image/png',
-      'Content-Length': returnedB64.length,
-      "Cache-Control": "public, max-age=345600",
-      "Expires": new Date(Date.now() + 345600000).toUTCString()
-    });
+  cacheClient.get(userQuery, async function (err, reply) {
+    if (reply == null) {
+      let canvas = await generateCanvas(user, color);
+      let returnedB64 = Buffer.from(canvas, 'base64');
+
+      cacheClient.setex(userQuery, defaultExpireTime, canvas);
+
+      res.writeHead(200, {
+        'Content-Type': 'image/png',
+        'Content-Length': returnedB64.length,
+        "Cache-Control": "public, max-age=345600",
+        "Expires": new Date(Date.now() + 345600000).toUTCString()
+      });
       res.end(returnedB64);
+    } else {
+      let returnedB64 = Buffer.from(reply, 'base64');
+      res.writeHead(200, {
+        'Content-Type': 'image/png',
+        'Content-Length': returnedB64.length,
+        "Cache-Control": "public, max-age=345600",
+        "Expires": new Date(Date.now() + 345600000).toUTCString()
+      });
+      res.end(returnedB64);
+    }
+  });
 });
 
 module.exports = router

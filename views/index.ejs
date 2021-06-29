@@ -11,11 +11,8 @@
     <h1 id="title">OSUCARD</h1>
     <p id="subtitle">Best Osu stats card generator</p>
     <div class="buttons-container">
-      <button onclick="showCard('login')" class="head-button">
-        Login
-      </button>
-      <button onclick="showCard('register')" class="head-button">
-        Register
+      <button class="head-button">
+        Create your own card!
       </button>
     </div>
    </header>
@@ -24,62 +21,6 @@
     <a href="https://github.com/K3BAA">Made with ❤️ by K3BA</a>
    </footer>
 
-   <div id="logincard">
-    <div class="background"></div>
-    <div class="auth-card">
-      <button onclick="hideCard('login')" id="auth-closebutton">&#x2715</button>
-      <h1 id="auth-title">Login</h1>
- 
-      <input class="auth-input" type="email" name="email" required placeholder="email" min="3" max="64"><br>
-      <input class="auth-input" type="password" name="password" required min="8" placeholder="password" max="255"><br>
- 
-      <button id="auth-button">
-        Login
-      </button>
-    </div>
-   </div>
-
-   <div id="registercard">
-    <div class="background"></div>
-    <div class="auth-card">
-      <button onclick="hideCard('register')" id="auth-closebutton">&#x2715</button>
-      <h1 id="auth-title">Register</h1>
- 
-      <input class="auth-input" type="text" name="username" required placeholder="username" min="3" max="64">&nbsp;
-      <input class="auth-input" type="email" name="email" required placeholder="email" min="3" max="255"><br>
-      <input class="auth-input" type="password" name="password" required min="8" placeholder="password" max="255"><br>
- 
-      <button id="auth-button">
-        Login
-      </button>
-    </div>
-   </div>
-
-   <script>
-    function showCard(card) {
-      switch(card) {
-        case "login":
-          document.getElementById("logincard").style = "display: block;";
-        break;
-
-        default: 
-          document.getElementById("registercard").style = "display: block;";
-        break;
-      }
-    }
-
-    function hideCard(card) {
-      switch(card) {
-        case "login":
-          document.getElementById("logincard").style = "display: none;";
-        break;
-
-        default: 
-          document.getElementById("registercard").style = "display: none;";
-        break;
-      }
-    }
-   </script>
  </body>
 </html>
 

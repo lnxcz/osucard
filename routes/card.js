@@ -1,6 +1,5 @@
 var express = require('express');
 const osu = require("node-osu");
-const redis = require('redis');
 const {
   createCanvas,
   loadImage,
@@ -8,17 +7,7 @@ const {
 } = require('canvas');
 var router = express.Router()
 
-// Create a new Redis client
-const defaultExpireTime = 60000;
-const cacheClient = redis.createClient();
 
-cacheClient.on("ready", () => {
-  console.log("Succefully connected to Redis client!");
-})
-
-cacheClient.on("error", (err) => {
-  console.log(err);
-})
 
 
 registerFont('./fonts/toru.otf', {
@@ -146,31 +135,18 @@ router.get('/:user', async function (req, res) {
 
   if (user.length != undefined) return res.redirect('/');
 
-  cacheClient.get(userQuery, async function (err, reply) {
-    if (reply == null) {
-      let canvas = await generateCanvas(user, color);
-      let returnedB64 = Buffer.from(canvas, 'base64');
+  let canvas = await generateCanvas(user, color);
+  let returnedB64 = Buffer.from(canvas, 'base64');
 
-      cacheClient.setex(userQuery, defaultExpireTime, canvas);
 
-      res.writeHead(200, {
-        'Content-Type': 'image/png',
-        'Content-Length': returnedB64.length,
-        "Cache-Control": "public, max-age=345600",
-        "Expires": new Date(Date.now() + 345600000).toUTCString()
-      });
-      res.end(returnedB64);
-    } else {
-      let returnedB64 = Buffer.from(reply, 'base64');
-      res.writeHead(200, {
-        'Content-Type': 'image/png',
-        'Content-Length': returnedB64.length,
-        "Cache-Control": "public, max-age=345600",
-        "Expires": new Date(Date.now() + 345600000).toUTCString()
-      });
-      res.end(returnedB64);
-    }
+
+  res.writeHead(200, {
+    'Content-Type': 'image/png',
+    'Content-Length': returnedB64.length,
+    "Cache-Control": "public, max-age=345600",
+    "Expires": new Date(Date.now() + 345600000).toUTCString()
   });
+  res.end(returnedB64);
 });
 
 module.exports = router

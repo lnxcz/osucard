@@ -184,7 +184,7 @@ body, html {
 }
 
 .popup h1 {
-  color: rgb(190, 190, 190);
+  color: #E8DDDD;
   font-size: 2.4em;
   text-align: center;
 }
@@ -244,10 +244,24 @@ body, html {
   border-radius: 7px;
   border-bottom: 4px solid #8C66FF;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-input{
+img{
+  width: 1.7rem;
+  height: auto;
+  position: absolute;
+  filter: invert(97%) sepia(1%) saturate(1261%) hue-rotate(314deg) brightness(87%) contrast(110%);
+}
+input,select{
+  outline: none;
+  color: white;
   border: none;
+  font-size: 1em;
+  padding-left: 1rem;
+  padding-right: 1rem;
   width: 100%;
   background-color: #3D3946;
   border-radius: 7px;

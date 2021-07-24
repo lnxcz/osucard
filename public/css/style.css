@@ -198,6 +198,9 @@ body, html {
 }
 
 .button{
+  cursor: pointer;
+  display: flex;
+  align-items: center;
   border-radius: 7px;
   background-color: #3D3946;
   height: 2.8rem;
@@ -250,7 +253,7 @@ body, html {
 }
 
 img{
-  width: 1.7rem;
+  width: 1.5rem;
   height: auto;
   position: absolute;
   filter: invert(97%) sepia(1%) saturate(1261%) hue-rotate(314deg) brightness(87%) contrast(110%);
@@ -268,6 +271,21 @@ input,select{
   border-bottom: 4px solid #8C66FF;
 }
 
+.svg{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 100%;
+  margin: 0 0 0 .6rem;
+}
+
+.text{
+  font-size: 1.5em;
+  color: #E8DDDD;
+  font-weight: 500;
+  margin-left: 1rem;
+}
 #card {
   width: 418px;
   height: 188px;

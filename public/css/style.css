@@ -198,14 +198,17 @@ body, html {
 }
 
 .button{
-  background-color: red;
+  border-radius: 7px;
+  background-color: #3D3946;
   height: 2.8rem;
   margin: 0 0 1rem 0;
 }
 
 .stats{
-  background-color: white;
+  border-radius: 7px;
+  background-color: #3D3946;
   height: 60%;
+  border-bottom: 4px solid #8C66FF;
 }
 .card{
   display: flex;
@@ -216,9 +219,12 @@ body, html {
 }
 
 .preview{
-  background-color: white;
+
+  background-color: #3D3946;
   height: auto;
+  border-radius: 10px;
   width: 65%;
+  border-bottom: 4px solid #8C66FF;
 
 }
 
@@ -233,13 +239,19 @@ body, html {
 .icon{
   width: 3rem;
   height: 3rem;
-  background-color: red;
+  background-color: #3D3946;
   margin-right: 2rem;
+  border-radius: 7px;
+  border-bottom: 4px solid #8C66FF;
   flex-shrink: 0;
 }
 
 input{
+  border: none;
   width: 100%;
+  background-color: #3D3946;
+  border-radius: 7px;
+  border-bottom: 4px solid #8C66FF;
 }
 
 #card {

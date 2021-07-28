@@ -239,9 +239,16 @@ body, html {
   margin: 3rem 0 3rem 0;
 }
 
+.etext{
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  margin-top: .5rem;
+  color: #E8DDDD;
+  font-weight: 500;
+}
+
 .icon{
   width: 3rem;
-  height: 3rem;
   background-color: #3D3946;
   margin-right: 2rem;
   border-radius: 7px;

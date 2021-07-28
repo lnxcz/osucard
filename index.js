@@ -10,6 +10,6 @@ app.use('/card', require('./routes/card.js'));
 app.use('/', require('./routes/index.js'));
 app.use('/profile', require('./routes/profile.js'));
 
-app.listen(5000, () => {
+app.listen(process.env.PORT, () => {
   console.log("App listening on *" + process.env.PORT);
 });

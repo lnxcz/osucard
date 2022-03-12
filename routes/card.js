@@ -133,7 +133,7 @@ router.get('/:user', async function (req, res) {
     u: userQuery
   });
 
-  if (user.length != undefined) return res.redirect('/');
+  if (user.length != undefined) return res.status(404).send("User not found");
 
   let canvas = await generateCanvas(user, color);
   let returnedB64 = Buffer.from(canvas, 'base64');
